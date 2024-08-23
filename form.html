@@ -1,0 +1,76 @@
+   <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Registration Form</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>Registration Form</header>
+        <form id="registrationForm" onsubmit="return validateForm()" action="index.html" method="GET">
+            <div class="field">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="field">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+
+            <div class="field">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LcFfCQpAAAAABY07T_KIYD0owpG8MkZ9MOOnt4-"></div>
+
+            <button type="submit">Next</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var response = grecaptcha.getResponse();
+            if (response.length === 0) {
+                alert('Please complete the reCAPTCHA.');
+                return false;
+            }
+
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            var emailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid Gmail email address.');
+                return false;
+            }
+
+            if (password.length > 10) {
+                alert('Password number should not exceed 10 characters.');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>
+
